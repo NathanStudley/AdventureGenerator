@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Adventure Generator</title>
+
+    <script type="module" src="main.js" defer></script>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <h1 class="title">Adventure Generator</h1>
+    <div id="leftHalf" class="split centered">
+        <h2>Add Activities</h2>
+        <label for="activityName">Activity: </label><input type="text" id="activityName" />
+        <label for="category">Category:</label><input type="text" id="category" />
+        </datalist>
+        <label for="location">Location:</label><input type="text" id="location" />
+        <label for="weatherdependent">Weather dependent (outdoor activity)?</label><input type="checkbox" id="weatherdependent" />
+        <input type="button" id="addActivity" value="Add!" />
+        <br />
+        <h3 id="confirmation"></h3>
+        <br />
+        <br />
+        <h2>Top Activities</h2>
+        <div id="topActivities"></div>
+
+    </div>
+    <div id="rightHalf" class="split centered">
+        <h2>Generate Activities!</h2>
+        <h5>Fill in your desired filters or nothing at all for complete randomness!</h5>
+        <label for="rcategories">Category:</label>
+        <select id="rcategories">
+            <option value="">Any</option>
+            <option value="fun" >fun</option>
+            <option value="educational">educational</option>
+            <option value="food">food</option>
+        </select>
+        <label for="rweatherdependent">Raining/Snowing?</label><input type="checkbox" id="rweatherdependent" />
+        <label for="rlocations">Location:</label>
+        <select id="rlocations">
+            <option value="">Any</option>
+            <option value="Amherst">Amherst</option>
+        </select>
+        <label for="howMany">How many activities on your adventure?</label><input type="number" id="howMany" min="1" max="6"/>
+        <br />
+        <input type="button" id="generateButton" value="Generate!!!"/>
+        <br />
+        <div id="randomActivities"></div>
+    </div>
+    
+  </body>
+</html>

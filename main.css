@@ -1,0 +1,57 @@
+
+.title{
+    text-align: center;
+}
+
+
+#rightHalf{
+    height: 100%;
+    width: 60%;
+    position: fixed;
+    background-color: rgb(107, 107, 239);
+    color: white;
+    right: 0;   
+}
+
+#leftHalf{
+    height: 100%;
+    width: 40%;
+    position: fixed;
+    background-color: rgb(235, 132, 132);
+    left: 0;
+    color: white;
+}
+
+.centered{
+    text-align: center;
+}
+
+#randomActivities{
+    width: 800px;
+    height: 300px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 3em;
+}
+
+#topActivities{
+    width: 500px;
+    height: 500px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 3em;
+}
+
+.activity-item{
+    height: 100px;
+    width: 250px;
+    border: 1px solid white;
+    font-family: sans-serif;
+    font-weight: bold;
+  
+    display:block;
+    align-items: center;
+    justify-content: center;
+}
