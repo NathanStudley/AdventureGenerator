@@ -37,11 +37,9 @@
 
 #topActivities{
     width: 500px;
-    height: 500px;
     margin: auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    margin-bottom: 3em;
 }
 
 .activity-item{
