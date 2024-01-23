@@ -94,6 +94,12 @@ class Database {
     async getDistinctLocations(){
         return await this.activities.distinct("location");
     }
+
+    async resetActivity(id){
+        const _id = id._id;
+        const o_id = new ObjectId(_id);
+        await this.activities.updateOne({"_id": o_id}, {$set: {"count": 0}});
+    }
 }
 
 const database = new Database();

@@ -1,4 +1,3 @@
-
 //elements
 const generateButtonElement = document.getElementById('generateButton');
 
@@ -63,7 +62,7 @@ const renderLocations = async() => {
 }
 
 
-const renderActivities = async(element, activities, canDelete) => {
+const renderActivities = async(element, activities) => {
     element.innerHTML = '';
     activities.forEach(act => {
 
@@ -80,34 +79,46 @@ const renderActivities = async(element, activities, canDelete) => {
         const timesCompleted = document.createElement('div');
         timesCompleted.innerHTML = 'Times Completed: ' + act.count;
 
-        const button = document.createElement('input');
-        button.type = 'button';
+        const deleteButton = document.createElement('input');
+        deleteButton.type = 'button';
+        deleteButton.value = 'Delete'
+        deleteButton.addEventListener('click', async() =>{
+            await deleteActivity(act._id);
+            div.innerHTML='';
+            await renderTopActivities();
+            await renderCategories();
+            await renderLocations();
+            randActivitiesElement.innerHTML ='';
+        });
 
-        if(canDelete){
-            button.value = 'Delete'
-            button.addEventListener('click', async() =>{
-                await deleteActivity(act._id);
-                div.innerHTML='';
-                await renderTopActivities();
-                await renderCategories();
-                await renderLocations();
-                randActivitiesElement.innerHTML ='';
-            });
+        const tallyButton = document.createElement('input');
+        tallyButton.type = 'button';
+        tallyButton.value = 'Update Tally!';
+        tallyButton.addEventListener('click', async() => {
+            await updateActivity(act._id);
+            act.count++;
+            timesCompleted.innerText = 'Times Completed: ' + act.count;
+            await renderTopActivities();
+        
+        });
 
-        } else{
-            button.value = 'Update Tally!';
-            button.addEventListener('click', async() => {
-                act.count++;
-                await updateActivity(act._id);
-                timesCompleted.innerText = 'Times Completed: ' + act.count;
-                await renderTopActivities();
-            
-            });
-        }
+        const resetButton = document.createElement('input');
+        resetButton.type = 'button';
+        resetButton.value = 'Reset Tally';
+        resetButton.addEventListener('click', async() => {
+            await resetActivity(act._id);
+            act.count = 0;
+            timesCompleted.innerText = 'Times Completed: 0';
+            await renderTopActivities();
+        })
+
+        
 
         div.innerHTML= 'Activity: ' + actName + '<br />' + ' Location: ' + location + '<br />';
         div.appendChild(timesCompleted);
-        div.appendChild(button);
+        div.appendChild(tallyButton);
+        div.appendChild(resetButton);
+        div.appendChild(deleteButton);
         element.appendChild(div);
     });
 }
@@ -149,18 +160,19 @@ const generateRandArr = async() => {
 
 const renderTopActivities = async() => {
     const topActs = await activitiesRanked();
-    await renderActivities(topActivitiesElement, topActs, true);
+    await renderActivities(topActivitiesElement, topActs);
+    renderTopActivities
 }
 await renderTopActivities();
 await renderCategories();
 await renderLocations();
 
-
+//button event listeners
 generateButtonElement.addEventListener('click', async() => {
 
     const activities = await generateRandArr();
     if(activities.length > 0){
-        await renderActivities(randActivitiesElement, activities, false);
+        await renderActivities(randActivitiesElement, activities);
     }
 });
 
@@ -185,7 +197,7 @@ addActivityButton.addEventListener('click', async() =>{
     }
 });
 
-
+//CRUD operations
 async function createActivity(name, category, weatherdependant, location){
     const newActivity = {name: name, category: category, weatherdependant: weatherdependant, location: location};
     const localURL = 'http://localhost:3000/createActivity';
@@ -212,6 +224,20 @@ async function updateActivity(_id){
         });
     } catch{
         
+    }
+}
+
+async function resetActivity(_id){
+    const localURL = 'http://localhost:3000/resetActivity';
+    const id = {_id: _id};
+    try {
+        const response = await fetch(localURL, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json',},
+            body: JSON.stringify(id),
+        });
+    } catch{
+
     }
 }
 
@@ -286,7 +312,7 @@ async function enough(parameters, number){
             headers: {'Content-Type': 'application/json',},
             body: JSON.stringify(params),
         });
-        console.log(response.json);
+      
         return await response.json();
     } catch{
 

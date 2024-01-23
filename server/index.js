@@ -50,7 +50,7 @@ app.delete('/deleteActivity', async(req, res) => {
     await database.deleteActivity(_id);
     await database.close();
     res.status(200).json({"status": "success"});
-})
+});
 
 app.put('/updateActivity', async(req, res) => {
     const _id = req.body;
@@ -58,14 +58,22 @@ app.put('/updateActivity', async(req, res) => {
     await database.updateActivityCount(_id);
     await database.close();
     res.status(200).json({"status": "success"});
-})
+});
+
+app.put('/resetActivity', async(req, res)=> {
+    const _id = req.body;
+    await database.connect();
+    await database.resetActivity(_id);
+    await database.close();
+    res.status(200).json({"status": "success"});
+});
 
 app.put('/enough', async(req, res)=> {
     const {parameters, number} = req.body;
     await database.connect();
     res.status(200).json(await database.enoughActivities(parameters, number));
     await database.close();
-})
+});
 
 app.get('/distinctCategories', async(req, res) => {
     await database.connect();
@@ -78,6 +86,7 @@ app.get('/distinctLocations', async(req, res) => {
     res.status(200).json(await database.getDistinctLocations());
     await database.close();
 });
+
 
 
 
