@@ -1,4 +1,4 @@
-//
+//database interaction file
 import {MongoClient, ObjectId} from 'mongodb';
 
 class Database {
