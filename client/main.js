@@ -197,6 +197,8 @@ addActivityButton.addEventListener('click', async() =>{
     }
 });
 
+
+
 //CRUD operations
 async function createActivity(name, category, weatherdependant, location){
     const newActivity = {name: name, category: category, weatherdependant: weatherdependant, location: location};
