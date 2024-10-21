@@ -37,10 +37,10 @@ app.get('/activitiesRanked', async(req, res) => {
     await database.close();
 });
 
-app.put('/randomActivity', async(req, res) =>{
-    const parameters = req.body;
+app.put('/randomActivities', async(req, res) =>{
+    const { parameters, number } = req.body;
     await database.connect();
-    res.status(200).json(await database.randomActivity(parameters));
+    res.status(200).json(await database.randomActivities(parameters, number));
     await database.close();
 });
 

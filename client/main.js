@@ -135,21 +135,12 @@ const generateRandArr = async() => {
     }
 
     const numActs = howManyElement.value;
-    let idArr = [];
     let actArr = [];
 
     if(await enough(newParameters, numActs)){
+        actArr = await randomActivities(newParameters, numActs);
+        console.log(actArr)
 
-        for(let i = 0; i < numActs; i++){
-            let newAct = await randomActivity(newParameters);
-            if(!idArr.includes(newAct._id)){
-                idArr.push(newAct._id);
-                actArr.push(newAct);
-            }
-            else{
-                i--;
-            }
-        }
     }
     else{
         alert('There is not enough activities to satisfy your filters. Add new activities or change filters.');
@@ -272,14 +263,14 @@ async function deleteActivity(_id){
     }
 }
 
-async function randomActivity(parameters){
-    const localURL = 'http://localhost:3000/randomActivity';
-
+async function randomActivities(parameters, number){
+    const localURL = 'http://localhost:3000/randomActivities';
+    const params = { parameters: parameters, number: number };
     try {
         const response = await fetch(localURL, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json',},
-            body: JSON.stringify(parameters),
+            body: JSON.stringify(params),
         });
 
         return await response.json();

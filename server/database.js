@@ -2,8 +2,11 @@
 import {MongoClient, ObjectId} from 'mongodb';
 
 class Database {
+
+    //Change this to your database url
     constructor(){
-        this.dburl = 'mongodb+srv://nathanstudley:thePassword@cluster0.6bhmhy0.mongodb.net/?retryWrites=true&w=majority';
+        this.dburl =
+          "mongodb+srv://adventure-generator:thePassword@cluster0.x8tbk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
     }
 
     async connect() {
@@ -66,10 +69,14 @@ class Database {
 
 
     //Find random activity given parameters.
-    async randomActivity(parameters){
+    async randomActivities(parameters, number){
         const activityArr = await this.activities.find(parameters).toArray();
-        const randActivity = activityArr[Math.floor(Math.random() * activityArr.length)]
-        return randActivity;
+        let randActs = [];
+
+        for (let i = 0; i < number; i++) {
+            randActs = randActs.concat(activityArr.splice(Math.floor(Math.random() * activityArr.length), 1));
+        }
+        return randActs;
     }
 
     //Get all activities ordered by times done.
